@@ -7,3 +7,7 @@ api:
   cluster:
     name: test-api
     namespace: api
+    config_file: kube_config.yaml
+  http_port: 8080
+  image_name: test-api-image
+  image_tag: local

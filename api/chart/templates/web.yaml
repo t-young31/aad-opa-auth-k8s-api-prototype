@@ -1,0 +1,86 @@
+{{- $app := .Release.Name -}}
+{{- $component := "web" -}}
+{{- $name := printf "%s-%s" $app $component -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ $name }}"
+  labels:
+    team: "{{ .Values.team }}"
+    app: "{{ $app }}"
+    component: "{{ $component }}"
+spec:
+  rules:
+    - host: "{{ .Values.app.domain }}"
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ $name }}
+                port:
+                  number: {{ .Values.app.port }}
+  tls:
+    - hosts:
+      - "{{ .Values.app.domain }}"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}
+  labels:
+    team: "{{ .Values.team }}"
+    app: "{{ $app }}"
+    component: "{{ $component }}"
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.app.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: "{{ $app }}"
+    component: "{{ $component }}"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ $name }}"
+  labels:
+    team: "{{ .Values.team }}"
+    app: "{{ $app }}"
+    component: "{{ $component }}"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "{{ $app }}"
+      component: "{{ $component }}"
+  template:
+    metadata:
+      labels:
+        team: "{{ .Values.team }}"
+        app: "{{ $app }}"
+        component: "{{ $component }}"
+    spec:
+      containers:
+        - name: "{{ $component }}"
+          image: "{{ .Values.app.image }}"
+          imagePullPolicy: Never
+          env:
+            - name: PRODUCTION
+              value: "{{ .Values.app.production }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.app.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http

@@ -10,7 +10,7 @@ def add_key_value_pairs(chunk: dict, pairs: List[tuple]) -> None:
     for key, value in chunk.items():
         if isinstance(value, dict):
             sub_chunk = {f"{key.upper()}_{k.upper()}": v for k, v in value.items()}
-            return add_key_value_pairs(sub_chunk, pairs)
+            add_key_value_pairs(sub_chunk, pairs)
         else:
             pairs.append((key.upper(), value))
 

@@ -5,19 +5,22 @@ set -o nounset
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
+function error(){
+  echo "$1"
+  exit 1
+}
+
 function assert_command_exists(){
     command="$1"; error_string="$2"
     if ! command -v "$command" &> /dev/null; then
-        echo "$error_string"
-        exit 1
+        error "$error_string"
     fi
 }
 
 function assert_file_exists(){
     filepath="$1"; error_string="$2"
     if [ ! -f "$filepath" ]; then
-        echo "$error_string"
-        exit 1
+        error "$error_string"
     fi
 }
 
@@ -30,6 +33,18 @@ function create_venv_if_required(){
   fi
 }
 
+function assert_flags_are_valid(){
+
+  for flag in "$DEBUG" "$PRODUCTION"; do
+      if [ "$flag" != "True" ] && [ "$flag" != "False" ]; then
+        error "Invalid value for flag. Please use true or false"
+      fi
+  done
+
+  if [ "$DEBUG" == "True" ] && [ "$PRODUCTION" == "True" ]; then
+    error "Cannot run in debug mode in production"
+  fi
+}
 
 assert_command_exists k3d "Needs a k3d install. See: https://github.com/k3d-io/k3d"
 
@@ -43,3 +58,8 @@ echo "Exporting env vars created from ${config_filepath}"
 "${SCRIPT_DIR}/scripts/print_key_value_pairs_from_yaml.py" "$config_filepath" > .env
 read -ra args < <(xargs < .env)
 export "${args[@]}"
+
+assert_flags_are_valid
+
+# Extra environment variables
+export KUBECONFIG="$API_CLUSTER_CONFIG_FILE"
