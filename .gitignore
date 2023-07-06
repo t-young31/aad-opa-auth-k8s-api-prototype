@@ -1,0 +1,12 @@
+# Mac specific
+.DS_Store
+# Python virtual environments
+.venv
+# IntelliJ
+.idea
+# mypy and ruff cache
+.*_cache
+# Configuration files
+config*.yaml
+!config.sample.yaml
+.env

@@ -1,0 +1,9 @@
+# Global configuration
+# Values in this configuration file will be exported as environment variables
+# in init.sh in the form PARENT_LEAF=value, for example:
+# api: name: test -> API_NAME=test
+---
+api:
+  cluster:
+    name: test-api
+    namespace: api
