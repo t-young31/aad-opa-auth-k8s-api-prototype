@@ -47,6 +47,7 @@ function assert_flags_are_valid(){
 }
 
 assert_command_exists k3d "Needs a k3d install. See: https://github.com/k3d-io/k3d"
+assert_command_exists terraform "Needs a terraform install. See https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli"
 
 config_filepath="$_SCRIPT_DIR/config.yaml"
 assert_file_exists "$config_filepath" "Failed to find a config.yaml file. Please create one from config.sample.yaml"
@@ -63,3 +64,4 @@ assert_flags_are_valid
 
 # Export additional environment variables
 export KUBECONFIG="${_SCRIPT_DIR}/${CLUSTER_CONFIG_FILE}"
+export API_REDIRECT_URL="https://${API_DOMAIN}:${API_HTTPS_PORT}/oauth2/callback"

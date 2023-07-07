@@ -25,7 +25,7 @@ function write_tf_vars(){
     cat <<EOF > "${SCRIPT_DIR}/terraform/terraform.tfvars"
 # Auto generated – edits will be overridden
 app_name = "$AZURE_APP_REGISTRATION_NAME"
-redirect_url = "https://${API_DOMAIN}/oauth2/callback"
+redirect_url = "$API_REDIRECT_URL"
 EOF
 }
 

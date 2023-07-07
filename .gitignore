@@ -16,6 +16,7 @@
 # Auto generated files
 api/chart/values.yaml
 terraform.tfvars
+oauth2-proxy.cfg
 # Terraform
 .terraform
 terraform.tfstate*

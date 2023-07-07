@@ -25,7 +25,7 @@ app:
   production: $PRODUCTION
 
 nginx:
-  port: 80
+  port: 5001
 EOF
 }
 
@@ -41,6 +41,6 @@ if ! namespace_exists; then
 fi
 
 api_image="${API_IMAGE_NAME}:${API_IMAGE_TAG}"
-#build_and_import_image
+build_and_import_image
 write_values
 install_chart

@@ -4,7 +4,7 @@ SHELL:=/bin/bash
 
 deploy: deploy-api
 
-destroy:
+destroy: destroy-aad-app-reg
 	echo "🔥 Destroying core infrastructure"
 	./destroy.sh
 

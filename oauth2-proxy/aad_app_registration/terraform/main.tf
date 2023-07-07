@@ -31,8 +31,25 @@ resource "azuread_application" "api" {
   }
 }
 
-# Get the MS Graph app
 resource "azuread_service_principal" "msgraph" {
   application_id = data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph
   use_existing   = true
+}
+
+resource "azuread_application_password" "api" {
+  application_object_id = azuread_application.api.object_id
+}
+
+resource "null_resource" "grant_aad_admin_consent" {
+  triggers = merge(
+    [for app in azuread_application.api.required_resource_access :
+      { for role in app.resource_access : "${app.resource_app_id}_${role.id}"=> role.type }
+    ]
+    ...
+  )
+
+  # Not possible with terraform so invoke the az cli to grant admin consent
+  provisioner "local-exec" {
+    command = "sleep 30 && az ad app permission admin-consent --id ${azuread_application.api.application_id}"
+  }
 }

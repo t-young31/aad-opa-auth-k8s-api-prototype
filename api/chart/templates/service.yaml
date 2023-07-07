@@ -11,8 +11,8 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: {{ .Values.nginx.port }}
-      targetPort: http
+    - port: 80
+      targetPort: {{ .Values.nginx.port }}
       protocol: TCP
       name: http
   selector:

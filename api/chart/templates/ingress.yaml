@@ -19,7 +19,7 @@ spec:
               service:
                 name: {{ $name }}
                 port:
-                  number: {{ .Values.nginx.port }}
+                  number: 80
   tls:
     - hosts:
         - "{{ .Values.app.domain }}"

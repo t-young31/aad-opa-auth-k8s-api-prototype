@@ -27,10 +27,6 @@ spec:
           env:
             - name: PRODUCTION
               value: "{{ .Values.app.production }}"
-          ports:
-            - name: http
-              containerPort: {{ .Values.app.port }}
-              protocol: TCP
           livenessProbe:
             httpGet:
               path: /
@@ -39,10 +35,16 @@ spec:
             httpGet:
               path: /
               port: http
+          ports:
+            - name: http
+              containerPort: {{ .Values.app.port }}
+              protocol: TCP
         - name: "nginx"
           image: nginx:latest
           ports:
-          - containerPort: 80
+            - name: nginx-http
+              containerPort: {{ .Values.nginx.port }}
+              protocol: TCP
           volumeMounts:
             - name: nginx-conf-volume
               mountPath: /etc/nginx/

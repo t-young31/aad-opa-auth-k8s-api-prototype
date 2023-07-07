@@ -1,3 +1,4 @@
+# Auto generated – edits will be overridden
 app:
   domain: sample.aoapp.localhost
   port: 5000
@@ -5,4 +6,4 @@ app:
   production: False
 
 nginx:
-  port: 80
+  port: 5001
