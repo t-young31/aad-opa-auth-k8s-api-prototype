@@ -14,7 +14,7 @@ function create_cluster(){
     --api-port "${CLUSTER_API_PORT}" \
     --servers 1 \
     --agents 1 \
-    --port "${API_HTTP_PORT}:80@loadbalancer" \
+    --port "${API_HTTP_PORT}:443@loadbalancer" \
     --wait
 }
 
