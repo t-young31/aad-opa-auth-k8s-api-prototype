@@ -15,3 +15,7 @@
 *.key
 # Auto generated files
 api/chart/values.yaml
+terraform.tfvars
+# Terraform
+.terraform
+terraform.tfstate*

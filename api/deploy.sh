@@ -17,6 +17,7 @@ function build_and_import_image(){
 
 function write_values(){
   cat <<EOF > "${SCRIPT_DIR}/chart/values.yaml"
+# Auto generated – edits will be overridden
 app:
   domain: $API_DOMAIN
   port: 5000

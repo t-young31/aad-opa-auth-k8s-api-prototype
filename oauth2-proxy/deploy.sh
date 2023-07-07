@@ -24,3 +24,4 @@ if ! namespace_exists; then
 fi
 
 install_chart
+"${SCRIPT_DIR}/aad_app_registration/deploy.sh"

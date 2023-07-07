@@ -16,5 +16,12 @@ api:
     namespace: api
   domain: sample.k3d.localhost
   https_port: 8080
-  image_name: test-api
-  image_tag: local
+  image:
+    name: test-api
+    tag: local
+
+azure:
+  tenant_id: __CHANGE_ME__
+  subscription_id: __CHANGE_ME__
+  app_registration:
+    name: sample-k3d-localhost
