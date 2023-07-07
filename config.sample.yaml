@@ -9,6 +9,7 @@ production: False
 cluster:
   name: test
   config_file: kube_config.yaml
+  api_port: 6550
 
 api:
   cluster:
@@ -17,8 +18,5 @@ api:
   image_name: test-api
   image_tag: local
 
-nginx:
-  cluster:
-    namespace: nginx-ingress
-  ssl_cert_filename: localhost.crt
-  ssl_key_filename: localhost.key
+# ssl_cert_filename: localhost.crt
+# ssl_key_filename: localhost.key

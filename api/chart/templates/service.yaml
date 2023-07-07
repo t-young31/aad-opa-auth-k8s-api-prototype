@@ -1,0 +1,21 @@
+{{- $app := .Release.Name -}}
+{{- $component := "web" -}}
+{{- $name := printf "%s-%s" $app $component -}}
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ $name }}
+  labels:
+    team: "{{ .Values.team }}"
+    app: "{{ $app }}"
+    component: "{{ $component }}"
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.nginx.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: "{{ $app }}"
+    component: "{{ $component }}"

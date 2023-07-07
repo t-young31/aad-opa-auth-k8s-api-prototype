@@ -1,7 +1,7 @@
 SHELL:=/bin/bash
 
 
-deploy: deploy-nginx deploy-api
+deploy: deploy-api
 
 destroy:
 	echo "Destroying 🔥"
@@ -14,10 +14,6 @@ deploy-core:
 deploy-api: deploy-core
 	echo "Deploying API 🚀"
 	./api/deploy.sh
-
-deploy-nginx: deploy-core
-	echo "Deploying Nginx ingress 🚀"
-	./nginx/deploy.sh
 
 
 .SILENT: # silence all targets

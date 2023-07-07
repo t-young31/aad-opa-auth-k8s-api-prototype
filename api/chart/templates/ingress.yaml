@@ -1,0 +1,25 @@
+{{- $app := .Release.Name -}}
+{{- $component := "web" -}}
+{{- $name := printf "%s-%s" $app $component -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ $name }}"
+  labels:
+    app: "{{ $app }}"
+    component: "{{ $component }}"
+spec:
+  rules:
+    - host: "{{ .Values.app.domain }}"
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ $name }}
+                port:
+                  number: {{ .Values.nginx.port }}
+  tls:
+    - hosts:
+        - "{{ .Values.app.domain }}"

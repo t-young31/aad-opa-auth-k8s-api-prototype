@@ -1,0 +1,56 @@
+{{- $app := .Release.Name -}}
+{{- $component := "web" -}}
+{{- $name := printf "%s-%s" $app $component -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ $name }}"
+  labels:
+    app: "{{ $app }}"
+    component: "{{ $component }}"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "{{ $app }}"
+      component: "{{ $component }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ $app }}"
+        component: "{{ $component }}"
+    spec:
+      containers:
+        - name: "{{ $component }}"
+          image: "{{ .Values.app.image }}"
+          imagePullPolicy: Never
+          env:
+            - name: PRODUCTION
+              value: "{{ .Values.app.production }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.app.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+        - name: "nginx"
+          image: nginx:latest
+          ports:
+          - containerPort: 80
+          volumeMounts:
+            - name: nginx-conf-volume
+              mountPath: /etc/nginx/
+              readOnly: true
+      volumes:
+        - name: nginx-conf-volume
+          configMap:
+            name: nginx-config
+            items:
+              - key: nginx.conf
+                path: nginx.conf
