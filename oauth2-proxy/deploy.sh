@@ -10,28 +10,12 @@ function namespace_exists(){
   kubectl get namespace | grep -q "$API_CLUSTER_NAMESPACE"
 }
 
-function build_and_import_image(){
-  docker build -t "$api_image" "${SCRIPT_DIR}/src"
-  k3d image import -c "$CLUSTER_NAME" "$api_image"
-}
-
-function write_values(){
-  cat <<EOF > "${SCRIPT_DIR}/chart/values.yaml"
-app:
-  domain: $API_DOMAIN
-  port: 5000
-  image: $api_image
-  production: $PRODUCTION
-
-nginx:
-  port: 80
-EOF
-}
-
 function install_chart(){
+  helm repo add oauth2-proxy https://oauth2-proxy.github.io/manifests
+
   helm upgrade \
     --debug \
-    --install sample-api "${SCRIPT_DIR}/chart" \
+    --install oauth2-proxy oauth2-proxy/oauth2-proxy \
     --namespace "$API_CLUSTER_NAMESPACE"
 }
 
@@ -39,7 +23,4 @@ if ! namespace_exists; then
   kubectl create namespace "$API_CLUSTER_NAMESPACE"
 fi
 
-api_image="${API_IMAGE_NAME}:${API_IMAGE_TAG}"
-#build_and_import_image
-write_values
 install_chart

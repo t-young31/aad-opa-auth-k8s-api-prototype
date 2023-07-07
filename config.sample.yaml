@@ -14,9 +14,7 @@ cluster:
 api:
   cluster:
     namespace: api
-  http_port: 8080
+  domain: sample.k3d.localhost
+  https_port: 8080
   image_name: test-api
   image_tag: local
-
-# ssl_cert_filename: localhost.crt
-# ssl_key_filename: localhost.key

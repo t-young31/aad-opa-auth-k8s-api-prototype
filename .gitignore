@@ -13,3 +13,5 @@
 # Secrets
 *.crt
 *.key
+# Auto generated files
+api/chart/values.yaml

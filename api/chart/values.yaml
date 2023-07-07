@@ -1,8 +1,8 @@
-team: Rancher
 app:
-  domain: sample.k3d.localhost
+  domain: sample.aoapp.localhost
   port: 5000
-  #srcFrom: /src
+  image: aoapp-api:local
+  production: False
 
 nginx:
   port: 80
