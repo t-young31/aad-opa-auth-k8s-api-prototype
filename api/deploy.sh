@@ -29,5 +29,5 @@ if ! namespace_exists; then
 fi
 
 api_image="${API_IMAGE_NAME}:${API_IMAGE_TAG}"
-build_and_import_image
+#build_and_import_image
 install_chart

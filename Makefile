@@ -1,3 +1,4 @@
+.PHONY: deploy destroy deploy-api deploy-core
 SHELL:=/bin/bash
 
 
