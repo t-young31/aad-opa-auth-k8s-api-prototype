@@ -10,6 +10,7 @@ metadata:
     app: "{{ $app }}"
     component: "{{ $component }}"
 spec:
+  ingressClassName: nginx
   rules:
     - host: "{{ .Values.app.domain }}"
       http:
@@ -24,6 +25,7 @@ spec:
   tls:
     - hosts:
       - "{{ .Values.app.domain }}"
+      secretName: default-server-secret
 ---
 apiVersion: v1
 kind: Service

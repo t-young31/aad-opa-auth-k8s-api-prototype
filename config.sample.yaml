@@ -3,11 +3,22 @@
 # in init.sh in the form PARENT_LEAF=value, for example:
 # api: name: test -> API_NAME=test
 ---
+debug: True
+production: False
+
+cluster:
+  name: test
+  config_file: kube_config.yaml
+
 api:
   cluster:
-    name: test-api
     namespace: api
-    config_file: kube_config.yaml
   http_port: 8080
-  image_name: test-api-image
+  image_name: test-api
   image_tag: local
+
+nginx:
+  cluster:
+    namespace: nginx-ingress
+  ssl_cert_filename: localhost.crt
+  ssl_key_filename: localhost.key

@@ -10,4 +10,6 @@
 *config*.yaml
 !config.sample.yaml
 .env
-
+# Secrets
+*.crt
+*.key
