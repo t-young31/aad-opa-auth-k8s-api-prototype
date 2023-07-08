@@ -1,7 +1,7 @@
 #!/bin/bash
 
 debug_args=""
-if [ "$PRODUCTION" == "False" ]; then
+if [ "$PRODUCTION" == "false" ]; then
   debug_args="--reload "
 fi
 

@@ -2,7 +2,6 @@
 #set -x trace
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-# shellcheck source=/dev/null
 . "${SCRIPT_DIR}/../init.sh"
 
 function build_and_import_image(){
@@ -18,6 +17,7 @@ app:
   port: 5000
   image: $api_image
   production: $PRODUCTION
+  debug: $DEBUG
 
 nginx:
   port: 5001

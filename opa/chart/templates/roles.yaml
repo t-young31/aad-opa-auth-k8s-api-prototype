@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: "{{ .Release.Name }}-roles"
+stringData:
+  roles.json: |
+    {
+      "roles": {
+        "admin": {
+          "/": ["GET"]
+        }
+      },
+      "role_bindings": {
+        "{{ .Values.opa.root_email }}": ["admin"]
+      }
+    }

@@ -38,9 +38,9 @@ spec:
           name: policy
         livenessProbe:
           httpGet:
-            scheme: HTTP              # assumes OPA listens on localhost:8181
+            scheme: HTTP
             port: {{ .Values.opa.port }}
-          initialDelaySeconds: 5      # tune these periods for your environment
+          initialDelaySeconds: 5
           periodSeconds: 5
         readinessProbe:
           httpGet:
@@ -50,6 +50,10 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 5
       volumes:
-      - name: policy
-        secret:
-          secretName: "{{ .Release.Name }}-policy"
+        - name: policy
+          projected:
+            sources:
+              - secret:
+                  name: "{{ .Release.Name }}-roles"
+              - configMap:
+                  name: "{{ .Release.Name }}-rbac"

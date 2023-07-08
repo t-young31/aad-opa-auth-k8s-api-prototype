@@ -9,7 +9,7 @@ OPA_URL = f"{os.environ['OPA_URL']}/v1/data/example"
 app = FastAPI()
 
 logging.basicConfig(
-    level=logging.DEBUG if os.environ.get("DEBUG", "True") else logging.WARNING
+    level=logging.DEBUG if os.environ.get("DEBUG", "true") else logging.WARNING
 )
 
 
@@ -21,8 +21,12 @@ async def root(request: Request, response: Response):
     if email is None:
         return {"message": "Hello unknown"}
 
-    logging.debug(f"Getting authorization from {OPA_URL}")
-    response = requests.post(OPA_URL, json={"input": {"email": email}})
+    auth_request = {"email": email, "path": "/", "method": request.method.upper()}
+    logging.debug(
+        f"Getting authorization from {OPA_URL} for \n"
+        f"{json.dumps(auth_request, indent=2)}"
+    )
+    response = requests.post(url=OPA_URL, json={"input": auth_request})
 
     if response.status_code >= 300:
         logging.warning(f"Error checking auth, got status {response.status_code}")

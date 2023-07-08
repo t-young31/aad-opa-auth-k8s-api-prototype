@@ -12,7 +12,7 @@ deploy-core:
 	echo "🚀 Deploying core infrastructure"
 	./deploy.sh
 
-deploy-api: deploy-core deploy-oauth2-proxy
+deploy-api: deploy-core deploy-oauth2-proxy deploy-opa
 	echo "🚀 Deploying API"
 	./api/deploy.sh
 
