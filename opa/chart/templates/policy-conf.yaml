@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: "{{ .Release.Name }}-policy"
+data:
+  example.rego: |-
+{{ .Files.Get "example.rego" | indent 4}}

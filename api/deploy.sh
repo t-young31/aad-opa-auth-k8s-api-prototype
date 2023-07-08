@@ -26,6 +26,8 @@ app:
 
 nginx:
   port: 5001
+
+namespace: $API_CLUSTER_NAMESPACE
 EOF
 }
 

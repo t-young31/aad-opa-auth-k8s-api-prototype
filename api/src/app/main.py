@@ -1,9 +1,10 @@
-from fastapi import FastAPI, Response, status
+from fastapi import FastAPI, Response, Request, status
 
 app = FastAPI()
 
 
 @app.get("/")
-async def root(response: Response):
+async def root(request: Request, response: Response):
     response.status_code = status.HTTP_200_OK
-    return {"message": "Hello World"}
+    email = request.headers["x-email"]
+    return {"message": f"Hello {email}"}

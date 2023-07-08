@@ -38,4 +38,3 @@ fi
 
 "${SCRIPT_DIR}/aad_app_registration/deploy.sh"
 install_chart
-

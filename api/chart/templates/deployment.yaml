@@ -27,6 +27,8 @@ spec:
           env:
             - name: PRODUCTION
               value: "{{ .Values.app.production }}"
+            - name: API_PORT
+              value: {{ .Values.app.port }}
           livenessProbe:
             httpGet:
               path: /
