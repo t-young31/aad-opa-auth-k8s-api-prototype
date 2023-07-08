@@ -5,3 +5,5 @@ greeting := msg {
     hostname := info.env["HOSTNAME"] # Kubernetes sets the HOSTNAME environment variable.
     msg := sprintf("hello from pod %q!", [hostname])
 }
+
+allow := false

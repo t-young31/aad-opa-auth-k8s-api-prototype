@@ -28,5 +28,9 @@ destroy-aad-app-reg:
 	echo "🔥 Destroying Azure active directory app registration"
 	./oauth2-proxy/aad_app_registration/destroy.sh
 
+deploy-opa:
+	echo "🚀 Deploying OPA"
+	./opa/deploy.sh
+
 
 .SILENT: # silence all targets

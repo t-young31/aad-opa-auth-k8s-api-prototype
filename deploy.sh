@@ -25,6 +25,11 @@ function write_kube_config() {
   chmod 600 "$CLUSTER_CONFIG_FILE"
 }
 
+function namespace_exists(){
+  kubectl get namespace | grep -q "$API_CLUSTER_NAMESPACE"
+}
+
+
 if ! cluster_exists; then
   create_cluster
   write_kube_config
@@ -32,6 +37,10 @@ fi
 
 if [ ! -f "$CLUSTER_CONFIG_FILE" ]; then
   error "Must have $CLUSTER_CONFIG_FILE"
+fi
+
+if ! namespace_exists; then
+  kubectl create namespace "$API_CLUSTER_NAMESPACE"
 fi
 
 echo "Core infrastructure ✅"
