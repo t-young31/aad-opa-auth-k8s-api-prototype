@@ -25,7 +25,7 @@ data:
         proxy_buffer_size         256k;
 
         location /oauth2/ {
-              proxy_pass       http://oauth2-proxy.api.svc.cluster.local;
+              proxy_pass       http://oauth2-proxy.{{ .Values.namespace }}.svc.cluster.local;
               proxy_set_header Host                    $host;
               proxy_set_header X-Real-IP               $remote_addr;
               proxy_set_header X-Scheme                $scheme;
@@ -33,7 +33,7 @@ data:
         }
 
         location = /oauth2/auth {
-          proxy_pass       http://oauth2-proxy.api.svc.cluster.local;
+          proxy_pass       http://oauth2-proxy.{{ .Values.namespace }}.svc.cluster.local;
           proxy_set_header Host             $host;
           proxy_set_header X-Real-IP        $remote_addr;
           proxy_set_header X-Scheme         $scheme;
@@ -57,7 +57,7 @@ data:
           auth_request_set $token  $upstream_http_x_auth_request_access_token;
           proxy_set_header X-Access-Token $token;
 
-          proxy_pass http://localhost:5000/;
+          proxy_pass http://localhost:{{ .Values.app.port }}/;
         }
       }
     }

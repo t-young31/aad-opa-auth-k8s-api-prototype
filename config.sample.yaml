@@ -25,3 +25,6 @@ azure:
   subscription_id: __CHANGE_ME__
   app_registration:
     name: sample-k3d-localhost
+
+opa:
+  root_email: __CHANGE_ME__@__CHANGE_ME__

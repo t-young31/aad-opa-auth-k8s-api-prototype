@@ -27,13 +27,19 @@ spec:
           env:
             - name: PRODUCTION
               value: "{{ .Values.app.production }}"
+            - name: DEBUG
+              value: "{{ .Values.app.debug }}"
+            - name: API_PORT
+              value: "{{ .Values.app.port }}"
+            - name: OPA_URL
+              value: "http://opa.{{ .Values.namespace }}.svc.cluster.local"
           livenessProbe:
             httpGet:
-              path: /
+              path: /health
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /health
               port: http
           ports:
             - name: http

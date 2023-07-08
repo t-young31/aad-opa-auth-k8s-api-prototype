@@ -4,6 +4,9 @@ app:
   port: 5000
   image: aoapp-api:local
   production: False
+  debug: True
 
 nginx:
   port: 5001
+
+namespace: api

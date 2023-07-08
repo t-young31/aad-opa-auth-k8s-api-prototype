@@ -1,9 +1,44 @@
-from fastapi import FastAPI, Response, status
+import os
+import json
+import logging
+import requests
 
+from fastapi import FastAPI, Response, Request, status
+
+OPA_URL = f"{os.environ['OPA_URL']}/v1/data/example"
 app = FastAPI()
+
+logging.basicConfig(
+    level=logging.DEBUG if os.environ.get("DEBUG", "true") else logging.WARNING
+)
 
 
 @app.get("/")
-async def root(response: Response):
+async def root(request: Request, response: Response):
     response.status_code = status.HTTP_200_OK
-    return {"message": "Hello World"}
+    email = request.headers.get("x-email", default=None)
+
+    if email is None:
+        return {"message": "Hello unknown"}
+
+    auth_request = {"email": email, "path": "/", "method": request.method.upper()}
+    logging.debug(
+        f"Getting authorization from {OPA_URL} for \n"
+        f"{json.dumps(auth_request, indent=2)}"
+    )
+    response = requests.post(url=OPA_URL, json={"input": auth_request})
+
+    if response.status_code >= 300:
+        logging.warning(f"Error checking auth, got status {response.status_code}")
+
+    data = response.json()
+    logging.info(f"Auth response: \n{json.dumps(data, indent=2)}")
+
+    prefix = "" if data["result"].get("allow", False) else "un"
+    return {"message": f"Hello {email} you are {prefix}authorized"}
+
+
+@app.get("/health")
+async def health(response: Response):
+    response.status_code = status.HTTP_200_OK
+    return "OK"

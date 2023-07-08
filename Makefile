@@ -12,7 +12,7 @@ deploy-core:
 	echo "🚀 Deploying core infrastructure"
 	./deploy.sh
 
-deploy-api: deploy-core deploy-oauth2-proxy
+deploy-api: deploy-core deploy-oauth2-proxy deploy-opa
 	echo "🚀 Deploying API"
 	./api/deploy.sh
 
@@ -27,6 +27,10 @@ deploy-aad-app-reg:
 destroy-aad-app-reg:
 	echo "🔥 Destroying Azure active directory app registration"
 	./oauth2-proxy/aad_app_registration/destroy.sh
+
+deploy-opa:
+	echo "🚀 Deploying OPA"
+	./opa/deploy.sh
 
 
 .SILENT: # silence all targets

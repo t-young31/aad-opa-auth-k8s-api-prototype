@@ -1,14 +1,8 @@
 #!/bin/bash
-#set -x trace
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-# shellcheck source=/dev/null
 . "${SCRIPT_DIR}/../init.sh"
 
-
-function namespace_exists(){
-  kubectl get namespace | grep -q "$API_CLUSTER_NAMESPACE"
-}
 
 function install_chart(){
   helm repo add oauth2-proxy https://oauth2-proxy.github.io/manifests
@@ -32,10 +26,5 @@ function install_chart(){
     --set config.configFile="$(cat "$config_file")"
 }
 
-if ! namespace_exists; then
-  kubectl create namespace "$API_CLUSTER_NAMESPACE"
-fi
-
 "${SCRIPT_DIR}/aad_app_registration/deploy.sh"
 install_chart
-
