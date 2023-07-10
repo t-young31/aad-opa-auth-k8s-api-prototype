@@ -32,5 +32,12 @@ deploy-opa:
 	echo "🚀 Deploying OPA"
 	./opa/deploy.sh
 
+deploy-ec2:
+	echo "🚀 Deploying AWS ec2 instance"
+	./ec2/deploy.sh
+
+destroy-ec2:
+	echo "🔥 Destroying AWS ec2 instance"
+	./ec2/destroy.sh
 
 .SILENT: # silence all targets

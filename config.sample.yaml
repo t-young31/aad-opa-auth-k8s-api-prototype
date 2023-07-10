@@ -15,6 +15,7 @@ api:
   cluster:
     namespace: api
   domain: sample.k3d.localhost
+  redirect_url: https://sample.k3d.localhost:8080/oauth2/callback
   https_port: 8080
   image:
     name: test-api
@@ -28,3 +29,7 @@ azure:
 
 opa:
   root_email: __CHANGE_ME__@__CHANGE_ME__
+
+aws:
+  prefix: sample-k3d-__CHANGE_ME__
+  profile: __CHANGE_ME__

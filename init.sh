@@ -26,8 +26,8 @@ function assert_file_exists(){
 
 function create_venv_if_required(){
   if [ ! -d "${_SCRIPT_DIR}/.venv" ]; then
-    assert_command_exists python "Please install python"
-    python -m venv .venv
+    assert_command_exists python3 "Please install python"
+    python3 -m venv .venv
     . .venv/bin/activate
     pip install -r scripts/requirements.txt
   fi
