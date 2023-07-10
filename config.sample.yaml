@@ -29,3 +29,7 @@ azure:
 
 opa:
   root_email: __CHANGE_ME__@__CHANGE_ME__
+
+aws:
+  prefix: sample-k3d-__CHANGE_ME__
+  profile: __CHANGE_ME__
