@@ -1,6 +1,5 @@
 #!/bin/bash
-
-username="ubuntu"
+# shellcheck disable=SC2154
 
 apt update
 cd /tmp || exit
@@ -32,7 +31,7 @@ apt-get update
 apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 
 # Add user to docker group
-usermod -aG docker "$username"
+usermod -aG docker "${username}"
 
 # Install kubectl
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"

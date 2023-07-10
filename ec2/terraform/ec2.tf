@@ -13,7 +13,7 @@ resource "aws_instance" "sample" {
   user_data = templatefile(
     "${path.module}/ec2_init.template.sh",
     {
-      # key = value
+      username = local.ec2_username
     }
   )
 
