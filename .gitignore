@@ -13,6 +13,7 @@
 # Secrets
 *.crt
 *.key
+id_rsa*
 # Auto generated files
 api/chart/values.yaml
 opa/chart/values.yaml
