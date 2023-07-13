@@ -5,7 +5,7 @@ import requests
 
 from fastapi import FastAPI, Response, Request, status
 
-OPA_URL = f"{os.environ['OPA_URL']}/v1/data/example"
+OPA_RBAC_URL = f"{os.environ['OPA_URL']}/v1/data/rbac"
 app = FastAPI()
 
 logging.basicConfig(
@@ -16,26 +16,37 @@ logging.basicConfig(
 @app.get("/")
 async def root(request: Request, response: Response):
     response.status_code = status.HTTP_200_OK
-    email = request.headers.get("x-email", default=None)
+    email = request.headers["x-email"]
 
-    if email is None:
-        return {"message": "Hello unknown"}
+    return {"message": f"Hello {email} you are authorized"}
 
-    auth_request = {"email": email, "path": "/", "method": request.method.upper()}
+
+@app.get("/authorize")
+async def authorize(request: Request, response: Response):
+    response.status_code = status.HTTP_401_UNAUTHORIZED
+
+    auth_request = {
+        "email": request.headers.get("x-email", default=None),
+        "path": request.headers.get("x-request_uri", default=None),
+        "method": request.headers.get("x-request_method", default=None),
+    }
     logging.debug(
-        f"Getting authorization from {OPA_URL} for \n"
+        f"Getting authorization from {OPA_RBAC_URL} for \n"
         f"{json.dumps(auth_request, indent=2)}"
     )
-    response = requests.post(url=OPA_URL, json={"input": auth_request})
+    opa_response = requests.post(url=OPA_RBAC_URL, json={"input": auth_request})
 
-    if response.status_code >= 300:
-        logging.warning(f"Error checking auth, got status {response.status_code}")
+    if opa_response.status_code >= 300:
+        logging.warning(f"Error checking auth. Status: {response.status_code}")
+        return
 
-    data = response.json()
+    data = opa_response.json()
     logging.info(f"Auth response: \n{json.dumps(data, indent=2)}")
 
-    prefix = "" if data["result"].get("allow", False) else "un"
-    return {"message": f"Hello {email} you are {prefix}authorized"}
+    if data["result"].get("allow", False):
+        response.status_code = status.HTTP_202_ACCEPTED
+
+    logging.debug(f"Status code {response.status_code}")
 
 
 @app.get("/health")

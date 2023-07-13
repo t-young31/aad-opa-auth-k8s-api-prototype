@@ -6,9 +6,7 @@ stringData:
   roles.json: |
     {
       "roles": {
-        "admin": {
-          "/": ["GET"]
-        }
+        "admin": {}
       },
       "role_bindings": {
         "{{ .Values.opa.root_email }}": ["admin"]
