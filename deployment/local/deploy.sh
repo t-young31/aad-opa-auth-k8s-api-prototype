@@ -2,7 +2,7 @@
 #set -x trace
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-. "${SCRIPT_DIR}/init.sh"
+. "${SCRIPT_DIR}/../../init.sh"
 
 function cluster_exists(){
     k3d cluster list | grep -q "$CLUSTER_NAME"
@@ -34,6 +34,8 @@ function namespace_exists(){
 if ! cluster_exists; then
   create_cluster
   write_kube_config
+else
+  echo "Cluster [${CLUSTER_NAME}] exists"
 fi
 
 if [ ! -f "$CLUSTER_CONFIG_FILE" ]; then

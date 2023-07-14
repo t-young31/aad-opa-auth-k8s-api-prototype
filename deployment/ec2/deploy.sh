@@ -21,3 +21,4 @@ function terraform_apply() {
 
 write_tf_vars
 terraform_apply
+echo "Please ssh onto the EC2 instance and run: make deploy"
