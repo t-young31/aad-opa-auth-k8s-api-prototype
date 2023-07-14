@@ -18,6 +18,7 @@ app:
   image: $api_image
   production: $PRODUCTION
   debug: $DEBUG
+  src: $API_SRC_DIRECTORY
 
 nginx:
   port: 5001

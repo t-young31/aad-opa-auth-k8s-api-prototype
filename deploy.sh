@@ -15,6 +15,7 @@ function create_cluster(){
     --servers 1 \
     --agents 1 \
     --port "${API_HTTPS_PORT}:443@loadbalancer" \
+    --volume "$(pwd)/api/src:$API_SRC_DIRECTORY@all" \
     --wait
 }
 

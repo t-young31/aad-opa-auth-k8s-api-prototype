@@ -45,6 +45,10 @@ spec:
             - name: http
               containerPort: {{ .Values.app.port }}
               protocol: TCP
+          volumeMounts:
+            - name: api-src
+              mountPath: /src
+              readOnly: false
         - name: "nginx"
           image: nginx:latest
           ports:
@@ -62,3 +66,7 @@ spec:
             items:
               - key: nginx.conf
                 path: nginx.conf
+        - name: api-src
+          hostPath:
+            path: "{{ .Values.app.src }}"
+            type: DirectoryOrCreate

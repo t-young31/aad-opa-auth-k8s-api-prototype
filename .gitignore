@@ -2,6 +2,8 @@
 .DS_Store
 # Python virtual environments
 .venv
+# Python cache
+__pycache__
 # IntelliJ
 .idea
 # mypy and ruff cache

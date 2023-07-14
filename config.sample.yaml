@@ -15,8 +15,9 @@ api:
   cluster:
     namespace: api
   domain: sample.k3d.localhost
-  redirect_url: https://sample.k3d.localhost:8080/oauth2/callback
   https_port: 8080
+  redirect_url: https://sample.k3d.localhost:8080/oauth2/callback
+  src_directory: /src
   image:
     name: test-api
     tag: local
