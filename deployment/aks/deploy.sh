@@ -25,6 +25,7 @@ app:
   https_port: $API_HTTPS_PORT
   namespace: $API_CLUSTER_NAMESPACE
   nginx_port: $API_NGINX_PORT
+  domain: $AZURE_DOMAIN
 EOF
 }
 

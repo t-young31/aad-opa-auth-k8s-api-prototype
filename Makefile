@@ -47,7 +47,7 @@ aks:
 	./deployment/aks/deploy.sh
 	$(MAKE) api
 
-destroy-aks:
+destroy-aks: destroy-aad-app-reg
 	echo "🔥 Destroying AKS"
 	./deployment/aks/destroy.sh
 
