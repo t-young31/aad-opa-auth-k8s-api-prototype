@@ -17,8 +17,7 @@ __pycache__
 *.key
 id_rsa*
 # Auto generated files
-api/chart/values.yaml
-opa/chart/values.yaml
+values.yaml
 terraform.tfvars
 oauth2-proxy.cfg
 # Terraform

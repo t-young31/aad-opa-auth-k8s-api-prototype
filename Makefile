@@ -42,4 +42,14 @@ destroy-ec2:
 	echo "🔥 Destroying AWS ec2 instance"
 	./deployment/ec2/destroy.sh
 
+aks:
+	echo "🚀 Deploying Azure Kubernetes Service (AKS)"
+	./deployment/aks/deploy.sh
+	$(MAKE) api
+
+destroy-aks:
+	echo "🔥 Destroying AKS"
+	./deployment/aks/destroy.sh
+
+
 .SILENT: # silence all targets

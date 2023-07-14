@@ -43,7 +43,7 @@ resource "azuread_application_password" "api" {
 resource "null_resource" "grant_aad_admin_consent" {
   triggers = merge(
     [for app in azuread_application.api.required_resource_access :
-      { for role in app.resource_access : "${app.resource_app_id}_${role.id}"=> role.type }
+      { for role in app.resource_access : "${app.resource_app_id}_${role.id}" => role.type }
     ]
     ...
   )

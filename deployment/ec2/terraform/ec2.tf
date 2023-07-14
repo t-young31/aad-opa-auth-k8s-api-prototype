@@ -37,5 +37,5 @@ resource "aws_instance" "sample" {
     }
   }
 
-  depends_on = [ aws_internet_gateway.sample ]
+  depends_on = [aws_internet_gateway.sample]
 }

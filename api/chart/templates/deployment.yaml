@@ -23,7 +23,6 @@ spec:
       containers:
         - name: "{{ $component }}"
           image: "{{ .Values.app.image }}"
-          imagePullPolicy: Never
           env:
             - name: PRODUCTION
               value: "{{ .Values.app.production }}"
@@ -45,10 +44,12 @@ spec:
             - name: http
               containerPort: {{ .Values.app.port }}
               protocol: TCP
+          {{- if .Values.app.src }}
           volumeMounts:
             - name: api-src
               mountPath: /src
               readOnly: false
+          {{- end }}
         - name: "nginx"
           image: nginx:latest
           ports:
@@ -66,7 +67,9 @@ spec:
             items:
               - key: nginx.conf
                 path: nginx.conf
+        {{- if .Values.app.src }}
         - name: api-src
           hostPath:
             path: "{{ .Values.app.src }}"
             type: DirectoryOrCreate
+        {{- end }}

@@ -4,21 +4,16 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 . "${SCRIPT_DIR}/../init.sh"
 
-function build_and_import_image(){
-  docker build -t "$api_image" "${SCRIPT_DIR}/src"
-  k3d image import -c "$CLUSTER_NAME" "$api_image"
-}
-
 function write_values(){
   cat <<EOF > "${SCRIPT_DIR}/chart/values.yaml"
 # Auto generated – edits will be overridden
 app:
   domain: $API_DOMAIN
   port: 5000
-  image: $api_image
+  image: $API_IMAGE_FULL
   production: $PRODUCTION
   debug: $DEBUG
-  src: $API_SRC_DIRECTORY
+  src: ${API_SRC_DIRECTORY+x}
 
 nginx:
   port: 5001
@@ -34,7 +29,5 @@ function install_chart(){
     --namespace "$API_CLUSTER_NAMESPACE"
 }
 
-api_image="${API_IMAGE_NAME}:${API_IMAGE_TAG}"
-build_and_import_image
 write_values
 install_chart

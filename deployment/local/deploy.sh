@@ -26,10 +26,10 @@ function write_kube_config() {
   chmod 600 "$CLUSTER_CONFIG_FILE"
 }
 
-function namespace_exists(){
-  kubectl get namespace | grep -q "$API_CLUSTER_NAMESPACE"
+function build_and_import_api_image(){
+  docker build -t "$API_IMAGE_FULL" "$SCRIPT_DIR/../../api/src"
+  k3d image import -c "$CLUSTER_NAME" "$API_IMAGE_FULL"
 }
-
 
 if ! cluster_exists; then
   create_cluster
@@ -42,8 +42,7 @@ if [ ! -f "$CLUSTER_CONFIG_FILE" ]; then
   error "Must have $CLUSTER_CONFIG_FILE"
 fi
 
-if ! namespace_exists; then
-  kubectl create namespace "$API_CLUSTER_NAMESPACE"
-fi
+create_namespace_if_required "$API_CLUSTER_NAMESPACE"
+build_and_import_api_image
 
 echo "Core infrastructure ✅"

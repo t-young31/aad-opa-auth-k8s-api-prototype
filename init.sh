@@ -4,25 +4,8 @@ set -o pipefail
 set -o nounset
 
 _SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-
-function error(){
-  echo "$1"
-  exit 1
-}
-
-function assert_command_exists(){
-    command="$1"; error_string="$2"
-    if ! command -v "$command" &> /dev/null; then
-        error "$error_string"
-    fi
-}
-
-function assert_file_exists(){
-    filepath="$1"; error_string="$2"
-    if [ ! -f "$filepath" ]; then
-        error "$error_string"
-    fi
-}
+# shellcheck source=/dev/null
+. "${_SCRIPT_DIR}/scripts/functions.sh"  # Export shared functions
 
 function create_venv_if_required(){
   if [ ! -d "${_SCRIPT_DIR}/.venv" ]; then
@@ -64,4 +47,9 @@ assert_flags_are_valid
 
 # Export additional environment variables
 export KUBECONFIG="${_SCRIPT_DIR}/${CLUSTER_CONFIG_FILE}"
-export API_REDIRECT_URL="https://${API_DOMAIN}:${API_HTTPS_PORT}/oauth2/callback"
+
+if [ -z "${AZURE_ACR_NAME+x}" ]; then  # is unset
+  export API_IMAGE_FULL="${API_IMAGE_NAME}:${API_IMAGE_TAG}"
+else
+  export API_IMAGE_FULL="${AZURE_ACR_NAME}.azurecr.io/api/${API_IMAGE_NAME}:${API_IMAGE_TAG}"
+fi

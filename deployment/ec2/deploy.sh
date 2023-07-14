@@ -3,7 +3,7 @@
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 # shellcheck source=/dev/null
-. "${SCRIPT_DIR}/../init.sh"
+. "${SCRIPT_DIR}/../../init.sh"
 
 function write_tf_vars(){
     cat <<EOF > "${SCRIPT_DIR}/terraform/terraform.tfvars"
@@ -12,13 +12,6 @@ aws_prefix = "$AWS_PREFIX"
 EOF
 }
 
-function terraform_apply() {
-  cd "${SCRIPT_DIR}/terraform" || exit
-  terraform init -upgrade
-  terraform validate
-  terraform apply --auto-approve
-}
-
 write_tf_vars
-terraform_apply
+terraform_apply "${SCRIPT_DIR}/terraform"
 echo "Please ssh onto the EC2 instance and run: make deploy"
