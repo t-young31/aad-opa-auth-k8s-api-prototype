@@ -1,6 +1,7 @@
 {{- $app := .Release.Name -}}
 {{- $component := "web" -}}
 {{- $name := printf "%s-%s" $app $component -}}
+{{- if .Values.app.domain }}
 kind: Service
 apiVersion: v1
 metadata:
@@ -18,3 +19,4 @@ spec:
   selector:
     app: "{{ $app }}"
     component: "{{ $component }}"
+{{- end }}

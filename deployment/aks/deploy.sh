@@ -15,7 +15,7 @@ EOF
 
 function write_kube_config(){
   cd "${SCRIPT_DIR}/terraform" || exit
-  terraform output -raw kube_config > "${SCRIPT_DIR}/../../kube_config.yaml"
+  terraform output -raw kube_config > "${SCRIPT_DIR}/../../${CLUSTER_CONFIG_FILE}"
 }
 
 function write_chart_values(){
@@ -23,6 +23,8 @@ function write_chart_values(){
 # Auto generated – edits will be overridden
 app:
   https_port: $API_HTTPS_PORT
+  namespace: $API_CLUSTER_NAMESPACE
+  nginx_port: $API_NGINX_PORT
 EOF
 }
 

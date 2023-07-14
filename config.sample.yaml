@@ -16,6 +16,7 @@ api:
     namespace: api
   domain: sample.k3d.localhost  # Can only be defined in local deployment
   https_port: 8080
+  nginx_port: 5001
   redirect_url: https://sample.k3d.localhost:8080/oauth2/callback
   src_directory: /src  # Can only be defined in local deployment
   image:

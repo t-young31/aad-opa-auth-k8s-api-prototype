@@ -8,7 +8,7 @@ function write_values(){
   cat <<EOF > "${SCRIPT_DIR}/chart/values.yaml"
 # Auto generated – edits will be overridden
 app:
-  domain: $API_DOMAIN
+  domain: ${API_DOMAIN+}
   port: 5000
   image: $API_IMAGE_FULL
   production: $PRODUCTION
@@ -16,7 +16,7 @@ app:
   src: ${API_SRC_DIRECTORY+x}
 
 nginx:
-  port: 5001
+  port: $API_NGINX_PORT
 
 namespace: $API_CLUSTER_NAMESPACE
 EOF

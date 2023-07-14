@@ -21,7 +21,7 @@ function create_cluster(){
 
 function write_kube_config() {
   echo "Writing kube configuration file..."
-  k3d kubeconfig get "$CLUSTER_NAME" > "$CLUSTER_CONFIG_FILE"
+  k3d kubeconfig get "$CLUSTER_NAME" > "${SCRIPT_DIR}/../../${CLUSTER_CONFIG_FILE}"
   # Make the config file read/writable to the current user
   chmod 600 "$CLUSTER_CONFIG_FILE"
 }
