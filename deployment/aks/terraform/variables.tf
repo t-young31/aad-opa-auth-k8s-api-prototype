@@ -4,11 +4,11 @@ variable "azure_suffix" {
 }
 
 variable "acr_name" {
-  type = string
+  type        = string
   description = "Name of the Azure Container Registry (ACR) to create"
 }
 
 variable "domain_label" {
-  type = string
+  type        = string
   description = "Domain to use for the public IP. FQDN will be e.g. <domain_label>.uksouth..cloudapp.azure.com"
 }
