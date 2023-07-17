@@ -1,0 +1,30 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    nginx.ingress.kubernetes.io/proxy-buffer-size: 256k
+    nginx.ingress.kubernetes.io/proxy-buffering: 'on'
+    nginx.ingress.kubernetes.io/proxy-buffers-number: '4'
+    nginx.ingress.kubernetes.io/proxy-max-temp-file-size: 1024m
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - {{ .Values.app.domain }}
+      secretName: tls-secret
+  rules:
+    - host: {{ .Values.app.domain }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: sample-api-web
+                port:
+                  number: 80

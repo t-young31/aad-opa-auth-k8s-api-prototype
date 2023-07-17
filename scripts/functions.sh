@@ -43,6 +43,7 @@ function assert_azure_logged_in(){
   echo -e "Ensuring logged in with:"
   echo -e "${cyan}Tenant id:${no_color}       ${AZURE_TENANT_ID}"
   echo -e "${cyan}Subscription id:${no_color} ${AZURE_SUBSCRIPTION_ID}"
+  assert_command_exists az "Please install the Azure CLI with e.g.: pip install azure-cli"
 
   ids=$(az account show --query "{tenantId:tenantId,subscriptionid:id}" -o tsv)
 

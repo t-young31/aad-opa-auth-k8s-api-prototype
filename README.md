@@ -1,6 +1,6 @@
 # aad-opa-auth-api-protoype
 > **Warning**
-> This repository is a prototype!
+> Very not production
 
 Create a `config.yaml` file from `config.sample.yaml`
 ```bash

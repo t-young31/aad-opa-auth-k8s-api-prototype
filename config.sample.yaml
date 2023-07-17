@@ -14,7 +14,6 @@ cluster:
 api:
   cluster:
     namespace: api
-  domain: sample.k3d.localhost  # Can only be defined in local deployment
   https_port: 8080
   nginx_port: 5001
   redirect_url: https://sample.k3d.localhost:8080/oauth2/callback
@@ -23,11 +22,16 @@ api:
     name: test-api
     tag: local
 
+local:
+  domain: sample.k3d.localhost
+
 azure:
   tenant_id: __CHANGE_ME__
   subscription_id: __CHANGE_ME__
   suffix: __CHANGE_ME__   # Required for AKS
   acr_name: __CHANGE_ME__   # Required for AKS
+  acme_email: __CHANGE_ME__@__CHANGE_ME__
+  domain: __CHANGE_ME__.__CHANGE_ME-LOCATION__.cloudapp.azure.com
   app_registration:
     name: sample-k3d-localhost
 
